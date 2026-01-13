@@ -1,15 +1,30 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Cormorant_Unicase,
+  Pinyon_Script,
+  Philosopher as PhilosopherSans,
+} from "next/font/google";
+import { LINK_BACKGROUND } from "@/constants";
+import "react-image-gallery/styles/css/image-gallery.css";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+export const cormorantUnicase = Cormorant_Unicase({
   subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-cormorant-unicase",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+export const pinyonScript = Pinyon_Script({
   subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-pinyon-script",
+});
+
+export const Philosopher = PhilosopherSans({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-philosopher-sans",
 });
 
 export const metadata: Metadata = {
@@ -23,11 +38,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html
+      lang="en"
+      className={`${cormorantUnicase.variable} ${pinyonScript.variable} ${Philosopher.variable}`}
+    >
+      <head>
+        <link
+          rel="preload"
+          href="/images/hero_banner.jpg"
+          as="image"
+          type="image/jpeg"
+        />
+      </head>
+      <body className="antialiased font-philosopher max-w-[430px] mx-auto shadow-xl text-primary">
+        <div
+          style={{
+            backgroundImage: `url(${LINK_BACKGROUND})`,
+            backgroundSize: "auto",
+            backgroundPosition: "center",
+            backgroundRepeat: "repeat",
+            minHeight: "100vh",
+          }}
+        >
+          {children}
+          <Toaster />
+        </div>
       </body>
     </html>
   );
